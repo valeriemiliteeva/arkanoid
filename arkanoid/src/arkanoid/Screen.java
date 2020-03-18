@@ -10,12 +10,26 @@ public class Screen {
 	 * creates a list that stores all sprites on the screen
 	 */
 	private ArrayList<Sprite> sprites;
-	
-	private void sleep() {
-		//delays method (Timer class)
+
+	public Screen(Color color, int height, int width) {
+		this.color = color;
+		this.height = height;
+		this.width = width;
 	}
-	
+
+	private void sleep() {
+		// delays method (Timer class)
+	}
+
 	private void makeAlive() {
-		//animates object and starts movement
+		// animates object and starts movement
+	}
+
+	public void addSprite(Sprite sprite) {
+		sprites.add(sprite);
+	}
+
+	public void removeSprite(Sprite sprite) {
+		sprites.remove(sprite);
 	}
 }
