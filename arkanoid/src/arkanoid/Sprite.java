@@ -51,11 +51,13 @@ public class Sprite {
 		} else if (angle == 270) {
 			dx = 0;
 			dy = pixels;
-		} else if (angle < 360) {
+		} else {
 			double angle2 = 2 * Math.PI - angleInRadians();
 			dx = (int) (pixels / Math.sqrt((1 + Math.pow(Math.tan(angle2), 2))));
 			dy = (int) (dx * (Math.tan(angle2)));
 		}
+		x += dx;
+		y += dy;
 	}
 
 }
