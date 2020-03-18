@@ -20,7 +20,7 @@ public class Sprite {
 		//implement draw method
 	}
 	
-	private void recalculatePos(int speed, int angle) {
+	private void recalculatePos() {
 		
 	}
 }
