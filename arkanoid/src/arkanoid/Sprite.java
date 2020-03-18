@@ -2,11 +2,11 @@ package arkanoid;
 
 public class Sprite {
 	private Color color;
-	private int x;
+	int x;
 	/**
 	 * location of sprite (x,y)
 	 */
-	private int y;
+	int y;
 	/**
 	 * pixels per second
 	 */
@@ -14,7 +14,7 @@ public class Sprite {
 	/**
 	 * calculated from 0 to 359
 	 */
-	private int angle;
+	int angle;
 
 	public Sprite(Color color) {
 		this.color = color;
@@ -28,7 +28,11 @@ public class Sprite {
 		// implement draw method
 	}
 
-	private void move(int pixels) {
+	public Color getColor() {
+		return color;
+	}
+
+	public void move(int pixels) {
 		int dx;
 		int dy;
 		if (angle < 90) {
