@@ -32,4 +32,5 @@ public class Screen {
 	public void removeSprite(Sprite sprite) {
 		sprites.remove(sprite);
 	}
+	
 }
