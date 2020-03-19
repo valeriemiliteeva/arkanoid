@@ -21,7 +21,7 @@ class SpriteTest {
 		sprite.angle = 30;
 		sprite.move(12);
 		assertEquals(110, sprite.x);
-		assertEquals(95, sprite.y);
+		assertEquals(94, sprite.y);
 	}
 
 	@Test
@@ -35,9 +35,9 @@ class SpriteTest {
 	@Test
 	void moveAngleUnder180() {
 		sprite.angle = 120;
-		sprite.move(14);
-		assertEquals(89, sprite.x);
-		assertEquals(93, sprite.y);
+		sprite.move(12);
+		assertEquals(94, sprite.x);
+		assertEquals(90, sprite.y);
 	}
 
 	@Test
@@ -51,9 +51,9 @@ class SpriteTest {
 	@Test
 	void moveAngleUnder270() {
 		sprite.angle = 240;
-		sprite.move(152);
-		assertEquals(96, sprite.x);
-		assertEquals(111, sprite.y);
+		sprite.move(12);
+		assertEquals(94, sprite.x);
+		assertEquals(110, sprite.y);
 	}
 
 	@Test
@@ -66,10 +66,10 @@ class SpriteTest {
 
 	@Test
 	void moveAngleUnder360() {
-		sprite.angle = 350;
-		sprite.move(17);
-		assertEquals(104, sprite.x);
-		assertEquals(113, sprite.y);
+		sprite.angle = 300;
+		sprite.move(12);
+		assertEquals(106, sprite.x);
+		assertEquals(110, sprite.y);
 	}
 
 }
