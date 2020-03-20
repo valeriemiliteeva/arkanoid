@@ -20,7 +20,7 @@ public class Ball extends Sprite {
 			} else if (angle > 270) {
 				angle = 540 - angle;
 			} else if (angle == 0) {
-				//beans
+				angle = 90;
 			}
 			x = 2 * maxX - 2 * radius - x;
 		}
@@ -31,7 +31,7 @@ public class Ball extends Sprite {
 			} else if (angle > 270) {
 				angle = 360 - angle;
 			} else if (angle == 270) {
-				//beans
+				angle = 90;
 			}
 			y = 2 * maxY - 2 * radius - y;
 		}
@@ -42,7 +42,7 @@ public class Ball extends Sprite {
 			} else if (angle > 180) {
 				angle = 540 - angle;
 			} else if (angle == 180) {
-				//beans
+				angle = 0;
 			}
 			x = 2 * radius  - x;
 		}
@@ -53,7 +53,7 @@ public class Ball extends Sprite {
 			} else if ( angle > 90) {
 				angle = 360 - angle;
 			} else if (angle == 90) {
-				//beans
+				angle = 270;
 			}
 			y = 2 * radius - y;
 		}
