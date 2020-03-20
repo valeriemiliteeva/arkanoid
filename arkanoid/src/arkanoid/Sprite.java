@@ -35,8 +35,12 @@ public class Sprite {
 	private static int round(double d) {
 		return (int)Math.round(d);
 	}
+	
+	public void bounce(int maxX, int maxY) {
 
-	public void move(int pixels) {
+	}
+
+	public void move(int pixels, int maxX, int maxY) {
 		int dx;
 		int dy;
 		if (angle < 90) {
@@ -66,6 +70,8 @@ public class Sprite {
 		}
 		x += dx;
 		y += dy;
+		
+		bounce(maxX, maxY);
 	}
 
 }
