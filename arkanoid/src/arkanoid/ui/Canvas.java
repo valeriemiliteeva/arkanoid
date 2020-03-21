@@ -22,6 +22,8 @@ public class Canvas extends JComponent {
   @Override
   public void paint(Graphics g) {
     Graphics2D g2d = (Graphics2D)g;
+    g2d.setBackground(Color.DARK_GRAY);
+    g2d.clearRect(0, 0, screen.getWidth(), screen.getHeight());
     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     for (Sprite sprite: screen.getSprites()) {
       sprite.draw(g2d);

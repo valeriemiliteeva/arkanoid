@@ -19,6 +19,18 @@ public class Screen {
 		this.width = width;
 	}
 
+	public int getHeight() {
+		return height;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
 	private void sleep() {
 		// delays method (Timer class)
 	}

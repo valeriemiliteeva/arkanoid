@@ -17,7 +17,8 @@ public class MainWindow {
     // setting closing operation
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     // setting size of the pop window
-    window.setBounds(30, 30, 1000, 500);
+    window.setBounds(30, 30, 500, 700);
+    window.setResizable(false);
     // setting canvas for draw
     initPanels(canvas);
     window.getContentPane().add(mainPanel);
@@ -29,7 +30,7 @@ public class MainWindow {
 
   private JPanel initPanels(Canvas canvas) {
     mainPanel = new JPanel();
-    mainPanel.setPreferredSize(new Dimension(1000, 500));
+    mainPanel.setPreferredSize(new Dimension(500, 700));
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
     mainPanel.add(canvas);
@@ -38,7 +39,7 @@ public class MainWindow {
   }
 
   static public void main(String[] args) throws Exception {
-    Screen screen = new Screen(Color.WHITE, 500, 500);
+    Screen screen = new Screen(Color.WHITE, 650, 500);
     Ball ball = new Ball(7, Color.BLUE);
     ball.setX(100);
     ball.setY(100);
