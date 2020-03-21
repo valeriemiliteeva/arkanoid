@@ -1,28 +1,31 @@
 package arkanoid.ui;
 
+import arkanoid.Screen;
+import arkanoid.Sprite;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Canvas extends JComponent {
 
-  int centerX = 100, centerY = 100;
-  int radius = 7;
+  private Random random = new Random();
 
-  Random random = new Random();
+  private Screen screen;
+
+  public Canvas(Screen screen) {
+    this.screen = screen;
+  }
 
   @Override
   public void paint(Graphics g) {
     Graphics2D g2d = (Graphics2D)g;
-    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-        RenderingHints.VALUE_ANTIALIAS_ON);
-
-    g.setColor(Color.BLUE);
-    g.fillOval(centerX - radius, centerY - radius, radius * 2, radius * 2);
-//    centerX += random.nextInt(7) - 3;
-//    centerY += random.nextInt(7) - 3;
-    centerX += 3;
-    centerY += 2;
+    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    for (Sprite sprite: screen.getSprites()) {
+      sprite.draw(g2d);
+    }
   }
 
 }

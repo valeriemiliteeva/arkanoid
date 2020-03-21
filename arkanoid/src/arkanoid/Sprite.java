@@ -2,13 +2,14 @@ package arkanoid;
 
 import java.awt.*;
 
-public class Sprite {
+abstract public class Sprite {
 	private Color color;
-	int x;
+
+  protected double x;
 	/**
 	 * location of sprite (x,y)
 	 */
-	int y;
+  protected double y;
 	/**
 	 * pixels per second
 	 */
@@ -22,19 +23,49 @@ public class Sprite {
 		this.color = color;
 	}
 
-	protected double angleInRadians() {
+  public double getX() {
+    return x;
+  }
+
+  public void setX(double x) {
+    this.x = x;
+  }
+
+  public double getY() {
+    return y;
+  }
+
+  public void setY(double y) {
+    this.y = y;
+  }
+
+  public int getSpeed() {
+    return speed;
+  }
+
+  public void setSpeed(int speed) {
+    this.speed = speed;
+  }
+
+  public int getAngle() {
+    return angle;
+  }
+
+  public void setAngle(int angle) {
+    this.angle = angle;
+  }
+
+  protected double angleInRadians() {
 		return (angle * Math.PI) / 180;
 	}
 
-	private void draw(Screen screen) {
-		// implement draw method
-	}
+	abstract public void draw(Graphics2D g);
 
 	public Color getColor() {
 		return color;
 	}
 
-	private static int round(double d) {
+	public static int round(double d) {
 		return (int)Math.round(d);
 	}
 	
@@ -42,33 +73,33 @@ public class Sprite {
 
 	}
 
-	public void move(int pixels, int maxX, int maxY) {
-		int dx;
-		int dy;
+	public void move(double pixels, int maxX, int maxY) {
+		double dx;
+		double dy;
 		if (angle < 90) {
-			dx = round(pixels / Math.sqrt((1 + Math.pow(Math.tan(angleInRadians()), 2))));
-			dy = -round(dx * (Math.tan(angleInRadians())));
+			dx = pixels / Math.sqrt((1 + Math.pow(Math.tan(angleInRadians()), 2)));
+			dy = - dx * (Math.tan(angleInRadians()));
 		} else if (angle == 90) {
 			dx = 0;
 			dy = -pixels;
 		} else if (angle < 180) {
 			double angle2 = Math.PI - angleInRadians();
-			dx = -round(pixels / Math.sqrt((1 + Math.pow(Math.tan(angle2), 2))));
-			dy = -round(-dx * (Math.tan(angle2)));
+			dx = -pixels / Math.sqrt((1 + Math.pow(Math.tan(angle2), 2)));
+			dy = dx * (Math.tan(angle2));
 		} else if (angle == 180) {
 			dx = -pixels;
 			dy = 0;
 		} else if (angle < 270) {
 			double angle2 = angleInRadians() - Math.PI;
-			dx = -round(pixels / Math.sqrt((1 + Math.pow(Math.tan(angle2), 2))));
-			dy = round(-dx * (Math.tan(angle2)));
+			dx = -pixels / Math.sqrt((1 + Math.pow(Math.tan(angle2), 2)));
+			dy = -dx * (Math.tan(angle2));
 		} else if (angle == 270) {
 			dx = 0;
 			dy = pixels;
 		} else {
 			double angle2 = 2 * Math.PI - angleInRadians();
-			dx = round(pixels / Math.sqrt((1 + Math.pow(Math.tan(angle2), 2))));
-			dy = round(dx * (Math.tan(angle2)));
+			dx = pixels / Math.sqrt((1 + Math.pow(Math.tan(angle2), 2)));
+			dy = dx * (Math.tan(angle2));
 		}
 		x += dx;
 		y += dy;

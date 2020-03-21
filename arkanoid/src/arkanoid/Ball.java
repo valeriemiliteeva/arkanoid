@@ -14,7 +14,14 @@ public class Ball extends Sprite {
 		this.radius = radius;
 	}
 
-	@Override
+  @Override
+  public void draw(Graphics2D g) {
+    g.setColor(getColor());
+    g.fillOval(round(x - radius), round(y - radius), round(radius * 2), round(radius * 2));
+
+  }
+
+  @Override
 	public void bounce(int maxX, int maxY) {
 		if (x > maxX - radius) {
 			if (angle < 90) {

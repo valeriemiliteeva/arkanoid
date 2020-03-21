@@ -1,5 +1,8 @@
 package arkanoid.ui;
 
+import arkanoid.Ball;
+import arkanoid.Screen;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -35,13 +38,44 @@ public class MainWindow {
   }
 
   static public void main(String[] args) throws Exception {
-    Canvas canvas = new Canvas();
+    Screen screen = new Screen(Color.WHITE, 500, 500);
+    Ball ball = new Ball(7, Color.BLUE);
+    ball.setX(100);
+    ball.setY(100);
+    ball.setSpeed(1250);
+    ball.setAngle(330);
+
+    Ball ball2 = new Ball(7, Color.GREEN);
+    ball2.setX(200);
+    ball2.setY(200);
+    ball2.setSpeed(1250);
+    ball2.setAngle(220);
+
+    Ball ball3 = new Ball(7, Color.PINK);
+    ball3.setX(300);
+    ball3.setY(300);
+    ball3.setSpeed(1250);
+    ball3.setAngle(60);
+
+    Ball ball4 = new Ball(7, Color.YELLOW);
+    ball4.setX(400);
+    ball4.setY(400);
+    ball4.setSpeed(1250);
+    ball4.setAngle(150);
+
+    screen.addSprite(ball);
+    screen.addSprite(ball2);
+    screen.addSprite(ball3);
+    screen.addSprite(ball4);
+
+
+    Canvas canvas = new Canvas(screen);
     MainWindow window = new MainWindow(canvas);
 
     while (true) {
       canvas.repaint();
-      window.mainPanel.repaint();
       Thread.sleep(10);
+      screen.animate(10);
     }
 
   }
