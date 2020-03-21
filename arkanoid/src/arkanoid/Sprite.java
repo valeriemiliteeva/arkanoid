@@ -1,5 +1,7 @@
 package arkanoid;
 
+import java.awt.*;
+
 public class Sprite {
 	private Color color;
 	int x;

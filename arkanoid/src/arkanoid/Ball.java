@@ -1,5 +1,7 @@
 package arkanoid;
 
+import java.awt.*;
+
 public class Ball extends Sprite {
 	private int radius;
 
