@@ -1,7 +1,8 @@
 package arkanoid;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Screen {
 	private int height;
@@ -43,6 +44,10 @@ public class Screen {
 
 	public void addSprite(Sprite sprite) {
 		sprites.add(sprite);
+	}
+	
+	public void addSprites(List<Sprite> sprites) {
+		this.sprites.addAll(sprites);
 	}
 
 	public void removeSprite(Sprite sprite) {
