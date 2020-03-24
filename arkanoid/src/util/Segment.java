@@ -8,7 +8,7 @@ public class Segment {
 		this.start = start;
 		this.end = end;
 	}
-	
+
 	public String toString() {
 		return String.format("%s - %s", start, end);
 	}
@@ -21,7 +21,8 @@ public class Segment {
 		double m2 = (s2.end.y - s2.start.y) / (s2.end.x - s2.start.x);
 		double b1 = s1.start.y - (s1.start.x * m1);
 		double b2 = s2.start.y - (s2.start.x * m2);
-		//System.out.println("equation one: y = " + m1 + "x + " + b1 + "; equation two: y = " + m2 + "x + " + b2);
+		// System.out.println("equation one: y = " + m1 + "x + " + b1 + "; equation two:
+		// y = " + m2 + "x + " + b2);
 		double xInt = -(b1 - b2) / (m1 - m2);
 		double yInt = m1 * xInt + b1;
 		if (Math.abs(m1 - m2) < 1e-6) {
@@ -35,7 +36,7 @@ public class Segment {
 			}
 		}
 	}
-	
+
 	private static boolean isBetween(Segment s, Point p) {
 		double minX = Math.min(s.start.x, s.end.x);
 		double maxX = Math.max(s.start.x, s.end.x);

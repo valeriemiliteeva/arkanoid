@@ -39,31 +39,41 @@ public class Game {
 	public ArrayList<Sprite> getBlocks() {
 		return blocks;
 	}
-	
+
 	public ArrayList<Sprite> getBalls() {
 		return balls;
 	}
-	
+
 	public void play() {
-		Ball ball = (Ball)balls.get(0);
+		Ball ball = (Ball) balls.get(0);
 		Point oldCenter = ballCenters.get(ball);
 		Segment ballSeg = new Segment(oldCenter, new Point(ball.getX(), ball.getY()));
-		System.out.println(ballSeg);
+		bounceFromBlocks(ballSeg, ball.getRadius());
 		saveBallCenters();
-		
 	}
-	
+
 	private void saveBallCenters() {
 		for (Sprite sprite : balls) {
-			Ball ball = (Ball)sprite;
+			Ball ball = (Ball) sprite;
 			ballCenters.put(ball, new Point(ball.getX(), ball.getY()));
 		}
 	}
 
-	public void removeBlock(Block block) {
-		blocks.remove(block);
-	}
-	
-	
+	private void bounceFromBlocks(Segment ballSeg, int radius) {
+		for (Sprite sprite : blocks) {
+			if (!sprite.isVisible()) {
+				continue;
+			}
+			Block block = (Block) sprite;
+			for (Segment blockSeg : block.getSegments(radius)) {
+				Point intersection = Segment.findIntersection(ballSeg, blockSeg);
+				if (intersection == null) {
+					continue;
+				}
+				
+				block.setVisible(false);
 
+			}
+		}
+	}
 }

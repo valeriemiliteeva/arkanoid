@@ -5,11 +5,11 @@ import java.awt.*;
 abstract public class Sprite {
 	private Color color;
 
-  protected double x;
+	protected double x;
 	/**
 	 * location of sprite (x,y)
 	 */
-  protected double y;
+	protected double y;
 	/**
 	 * pixels per second
 	 */
@@ -19,43 +19,53 @@ abstract public class Sprite {
 	 */
 	int angle;
 
+	boolean isVisible = true;
+
 	public Sprite(Color color) {
 		this.color = color;
 	}
 
-  public double getX() {
-    return x;
-  }
+	public double getX() {
+		return x;
+	}
 
-  public void setX(double x) {
-    this.x = x;
-  }
+	public void setX(double x) {
+		this.x = x;
+	}
 
-  public double getY() {
-    return y;
-  }
+	public double getY() {
+		return y;
+	}
 
-  public void setY(double y) {
-    this.y = y;
-  }
+	public void setY(double y) {
+		this.y = y;
+	}
 
-  public int getSpeed() {
-    return speed;
-  }
+	public int getSpeed() {
+		return speed;
+	}
 
-  public void setSpeed(int speed) {
-    this.speed = speed;
-  }
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
 
-  public int getAngle() {
-    return angle;
-  }
+	public int getAngle() {
+		return angle;
+	}
 
-  public void setAngle(int angle) {
-    this.angle = angle;
-  }
+	public void setAngle(int angle) {
+		this.angle = angle;
+	}
 
-  protected double angleInRadians() {
+	public boolean isVisible() {
+		return isVisible;
+	}
+
+	public void setVisible(boolean isVisible) {
+		this.isVisible = isVisible;
+	}
+
+	protected double angleInRadians() {
 		return (angle * Math.PI) / 180;
 	}
 
@@ -66,9 +76,9 @@ abstract public class Sprite {
 	}
 
 	public static int round(double d) {
-		return (int)Math.round(d);
+		return (int) Math.round(d);
 	}
-	
+
 	public void bounce(int maxX, int maxY) {
 
 	}
@@ -78,7 +88,7 @@ abstract public class Sprite {
 		double dy;
 		if (angle < 90) {
 			dx = pixels / Math.sqrt((1 + Math.pow(Math.tan(angleInRadians()), 2)));
-			dy = - dx * (Math.tan(angleInRadians()));
+			dy = -dx * (Math.tan(angleInRadians()));
 		} else if (angle == 90) {
 			dx = 0;
 			dy = -pixels;
@@ -103,7 +113,7 @@ abstract public class Sprite {
 		}
 		x += dx;
 		y += dy;
-		
+
 		bounce(maxX, maxY);
 	}
 

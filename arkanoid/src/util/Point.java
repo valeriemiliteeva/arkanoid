@@ -8,8 +8,12 @@ public class Point {
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	public String toString() {
 		return String.format("(%.2f, %.2f)", x, y);
+	}
+	
+	public static double findDistance(Point a, Point b) {
+		return 0.0;
 	}
 }

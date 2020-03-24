@@ -24,15 +24,22 @@ public class Block extends Sprite {
 		g.fillRect(round(x), round(y), width, height);
 	}
 	
-	public Segment[] getSegments() {
-		Point topLeft = new Point(getX(), getY());
-		Point topRight = new Point(getX() + width, getY());
-		Point bottomRight = new Point(getX() + width, getY() + height);
-		Point bottomLeft = new Point(getX(), getY() + height);
-		Segment top = new Segment(topLeft, topRight);
-		Segment right = new Segment(topRight, bottomRight);
-		Segment bottom = new Segment(bottomLeft, bottomRight);
-		Segment left = new Segment(bottomLeft, topLeft);
+	public Segment[] getSegments(int pixelsFrom) {
+//		Point topLeft = new Point(getX(), getY());
+//		Point topRight = new Point(getX() + width, getY());
+//		Point bottomRight = new Point(getX() + width, getY() + height);
+//		Point bottomLeft = new Point(getX(), getY() + height);
+		Segment top = new Segment(new Point(getX(), getY() - pixelsFrom), 
+				new Point(getX() + width, getY() - pixelsFrom));
+		Segment right = new Segment(
+				new Point(getX() + width + pixelsFrom, getY()),
+				new Point(getX() + width + pixelsFrom, getY() + height));
+		Segment bottom = new Segment(
+				new Point(getX() + width, getY() + height + pixelsFrom), 
+				new Point(getX(), getY() + height + pixelsFrom));
+		Segment left = new Segment(
+				new Point(getX() - pixelsFrom, getY() + height),
+				new Point(getX() - pixelsFrom, getY()));
 		return new Segment[] {top, right, bottom, left};
 	}
 	
