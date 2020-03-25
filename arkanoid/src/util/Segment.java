@@ -42,7 +42,10 @@ public class Segment {
 		double maxX = Math.max(s.start.x, s.end.x);
 		double minY = Math.min(s.start.y, s.end.y);
 		double maxY = Math.max(s.start.y, s.end.y);
-		if (minX <= p.x && maxX >= p.x && minY <= p.y && maxY >= p.y) {
+		if (minX - p.x <= 1e-6 &&
+				maxX - p.x >= -1e-6 &&
+				minY - p.y <= 1e-6 &&
+				maxY - p.y >= -1e-6) {
 			return true;
 		}
 		return false;
