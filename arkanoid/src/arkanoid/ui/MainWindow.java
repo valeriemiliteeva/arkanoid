@@ -1,7 +1,6 @@
 package arkanoid.ui;
 
 import arkanoid.Ball;
-import arkanoid.Block;
 import arkanoid.Game;
 import arkanoid.Screen;
 
