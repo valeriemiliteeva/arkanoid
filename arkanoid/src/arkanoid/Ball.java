@@ -5,23 +5,27 @@ import java.awt.*;
 public class Ball extends Sprite {
 	private int radius;
 
-	public int getRadius() {
-		return radius;
-	}
-
 	public Ball(int radius, Color color) {
 		super(color);
 		this.radius = radius;
 	}
 
-  @Override
-  public void draw(Graphics2D g) {
-    g.setColor(getColor());
-    g.fillOval(round(x - radius), round(y - radius), round(radius * 2), round(radius * 2));
+	public int getRadius() {
+		return radius;
+	}
 
-  }
+	public void setRadius(int radius) {
+		this.radius = radius;
+	}
 
-  @Override
+	@Override
+	public void draw(Graphics2D g) {
+		g.setColor(getColor());
+		g.fillOval(round(x - radius), round(y - radius), round(radius * 2), round(radius * 2));
+
+	}
+
+	@Override
 	public void bounce(int maxX, int maxY) {
 		if (x > maxX - radius) {
 			if (angle < 90) {
@@ -53,13 +57,13 @@ public class Ball extends Sprite {
 			} else if (angle == 180) {
 				angle = 0;
 			}
-			x = 2 * radius  - x;
+			x = 2 * radius - x;
 		}
 
 		if (y < radius) {
 			if (angle < 90) {
 				angle = 360 - angle;
-			} else if ( angle > 90) {
+			} else if (angle > 90) {
 				angle = 360 - angle;
 			} else if (angle == 90) {
 				angle = 270;
