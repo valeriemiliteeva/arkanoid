@@ -22,12 +22,10 @@ public class Ball extends Sprite {
 	public void draw(Graphics2D g) {
 		g.setColor(getColor());
 		g.fillOval(round(x - radius), round(y - radius), round(radius * 2), round(radius * 2));
-
 	}
 
-	@Override
-	public void bounce(int maxX, int maxY) {
-		if (x > maxX - radius) {
+	public void bounceLeft(double wallX) {
+		if (x > wallX - radius) {
 			if (angle < 90) {
 				angle = 180 - angle;
 			} else if (angle > 270) {
@@ -35,10 +33,12 @@ public class Ball extends Sprite {
 			} else if (angle == 0) {
 				angle = 90;
 			}
-			x = 2 * maxX - 2 * radius - x;
+			x = 2 * wallX - 2 * radius - x;
 		}
+	}
 
-		if (y > maxY - radius) {
+	public void bounceUp(double wallY) {
+		if (y > wallY - radius) {
 			if (angle < 270) {
 				angle = 360 - angle;
 			} else if (angle > 270) {
@@ -46,10 +46,12 @@ public class Ball extends Sprite {
 			} else if (angle == 270) {
 				angle = 90;
 			}
-			y = 2 * maxY - 2 * radius - y;
+			y = 2 * wallY - 2 * radius - y;
 		}
+	}
 
-		if (x < radius) {
+	public void bounceRight(double wallX) {
+		if (x < wallX + radius) {
 			if (angle < 180) {
 				angle = 180 - angle;
 			} else if (angle > 180) {
@@ -57,10 +59,12 @@ public class Ball extends Sprite {
 			} else if (angle == 180) {
 				angle = 0;
 			}
-			x = 2 * radius - x;
+			x = 2 * wallX + 2 * radius - x;
 		}
+	}
 
-		if (y < radius) {
+	public void bounceDown(double wallY) {
+		if (y < wallY + radius) {
 			if (angle < 90) {
 				angle = 360 - angle;
 			} else if (angle > 90) {
@@ -68,7 +72,17 @@ public class Ball extends Sprite {
 			} else if (angle == 90) {
 				angle = 270;
 			}
-			y = 2 * radius - y;
+			y = 2 * wallY + 2 * radius - y;
 		}
+	}
+
+	@Override
+	public void bounce(int maxX, int maxY) {
+
+		bounceLeft(maxX);
+		bounceUp(maxY);
+		bounceRight(0);
+		bounceDown(0);
+
 	}
 }
