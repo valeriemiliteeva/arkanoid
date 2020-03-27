@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import arkanoid.ui.MainWindow;
 import util.Point;
 import util.Segment;
 
@@ -123,6 +124,22 @@ public class Game {
 			}
 		}
 	}
+	
+	private void bounceOffBoard(Segment segment, Ball ball) {
+		/* 
+		 * check if segment intersects top of board
+		 * bounceUp() -- pass board.getY()
+		 * 
+		 */
+	}
 
+	public void moveBoard(int distance) {
+		board.setX(board.getX() + distance);
+		if (board.getX() < 0) {
+			board.setX(0);
+		} else if (board.getX() > MainWindow.WIDTH - board.getLength()) {
+			board.setX(MainWindow.WIDTH - board.getLength());
+		}
+	}
 
 }

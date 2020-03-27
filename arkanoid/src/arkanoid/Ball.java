@@ -78,9 +78,7 @@ public class Ball extends Sprite {
 
 	@Override
 	public void bounce(int maxX, int maxY) {
-
 		bounceLeft(maxX);
-		bounceUp(maxY);
 		bounceRight(0);
 		bounceDown(0);
 

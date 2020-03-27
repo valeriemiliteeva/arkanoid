@@ -11,7 +11,7 @@ public class MainWindow {
 
 	private JFrame window;
 	private JPanel mainPanel;
-	private static final int WIDTH = 503;
+	public static final int WIDTH = 503;
 	
 
 	public MainWindow(Canvas canvas) {
@@ -80,6 +80,9 @@ public class MainWindow {
 
 		Canvas canvas = new Canvas(screen);
 		MainWindow window = new MainWindow(canvas);
+		
+		Keyboard keyboard = new Keyboard(game);
+		window.window.addKeyListener(keyboard);
 
 		while (true) {
 			canvas.repaint();
