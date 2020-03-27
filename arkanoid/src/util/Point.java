@@ -15,7 +15,7 @@ public class Point {
 	
 	public static double findDistance(Point a, Point b) {
 		double legA = Math.abs(a.x - b.x);
-		double legB = Math.abs(a.y -  b.y);
+		double legB = Math.abs(a.y - b.y);
 		double distance = Math.sqrt(legA * legA + legB * legB);
 		return distance;
 	}

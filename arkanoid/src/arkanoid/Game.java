@@ -16,6 +16,7 @@ public class Game {
 
 	private ArrayList<Sprite> blocks = new ArrayList<>();
 	private ArrayList<Sprite> balls = new ArrayList<>();
+	private Board board;
 	private HashMap<Ball, Point> ballCenters = new HashMap<>();
 
 	public Game() {
@@ -34,6 +35,10 @@ public class Game {
 		ball.setSpeed(500);
 		balls.add(ball);
 		saveBallCenters();
+		
+		board = new Board(90, 15, Color.LIGHT_GRAY);
+		board.setX(205);
+		board.setY(630);
 	}
 
 	public ArrayList<Sprite> getBlocks() {
@@ -42,6 +47,10 @@ public class Game {
 
 	public ArrayList<Sprite> getBalls() {
 		return balls;
+	}
+	
+	public Board getBoard() {
+		return board;
 	}
 
 	public void play() {
