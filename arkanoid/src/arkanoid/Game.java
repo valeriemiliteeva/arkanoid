@@ -7,7 +7,12 @@ import java.util.HashMap;
 import util.Point;
 import util.Segment;
 
+import static util.Utils.doubleEquals;
+import static util.Utils.doubleGreater;
+
 public class Game {
+
+	private static final int INITIAL_SPEED = 600;
 
 	private static final Color[] COLORS = { Color.LIGHT_GRAY, Color.RED, Color.YELLOW, Color.BLUE, Color.MAGENTA,
 			Color.GREEN };
@@ -32,7 +37,7 @@ public class Game {
 		ball.setX(250);
 		ball.setY(620);
 		ball.setAngle(45);
-		ball.setSpeed(500);
+		ball.setSpeed(INITIAL_SPEED);
 		balls.add(ball);
 		saveBallCenters();
 		
@@ -57,7 +62,7 @@ public class Game {
 		Ball ball = (Ball) balls.get(0);
 		Point oldCenter = ballCenters.get(ball);
 		Segment ballSeg = new Segment(oldCenter, new Point(ball.getX(), ball.getY()));
-		bounceFromBlocks(ballSeg, ball.getRadius());
+		bounceFromBlocks(ballSeg, ball);
 		saveBallCenters();
 	}
 
@@ -68,21 +73,56 @@ public class Game {
 		}
 	}
 
-	private void bounceFromBlocks(Segment ballSeg, int radius) {
+	private void bounceFromBlocks(Segment ballSeg, Ball ball) {
 		for (Sprite sprite : blocks) {
 			if (!sprite.isVisible()) {
 				continue;
 			}
+			Point oldCenter = ballSeg.getStart();
+			Point intersectionPoint = null;
+			double distanceFromOldCenter = Double.MAX_VALUE;
+			Segment hitSegment = null;
+
 			Block block = (Block) sprite;
-			for (Segment blockSeg : block.getSegments(radius)) {
-				Point intersection = Segment.findIntersection(ballSeg, blockSeg);
-				if (intersection == null) {
+			for (Segment blockSeg : block.getSegments(ball.getRadius())) {
+				Point newIntersection = Segment.findIntersection(ballSeg, blockSeg);
+				if (newIntersection == null) {
 					continue;
 				}
-				
+				double newDistanceFromOldCenter = Point.findDistance(oldCenter, newIntersection);
+				if (newDistanceFromOldCenter < distanceFromOldCenter) {
+					intersectionPoint = newIntersection;
+					distanceFromOldCenter = newDistanceFromOldCenter;
+					hitSegment = blockSeg;
+				}
+			}
+			// intersectionPoint now is the closest intersection from old center
+			if (intersectionPoint != null) {
+				// ball hit the block!
+				// bounce off of it
+				bounceOffBlock(hitSegment, ball);
+				// hide block
 				block.setVisible(false);
-
 			}
 		}
 	}
+
+	private void bounceOffBlock(Segment segment, Ball ball) {
+		if (doubleEquals(segment.getStart().y, segment.getEnd().y)) {
+			if (doubleGreater(ball.y, segment.getStart().y)) {
+				ball.bounceUp(segment.getStart().y);
+			} else {
+				ball.bounceDown(segment.getStart().y);
+			}
+		}
+		if (doubleEquals(segment.getStart().x, segment.getEnd().x)) {
+			if (doubleGreater(ball.x, segment.getStart().x)) {
+				ball.bounceLeft(segment.getStart().x);
+			} else {
+				ball.bounceRight(segment.getStart().x);
+			}
+		}
+	}
+
+
 }

@@ -9,6 +9,14 @@ public class Segment {
 		this.end = end;
 	}
 
+	public Point getStart() {
+		return start;
+	}
+
+	public Point getEnd() {
+		return end;
+	}
+
 	public String toString() {
 		return String.format("%s - %s", start, end);
 	}
