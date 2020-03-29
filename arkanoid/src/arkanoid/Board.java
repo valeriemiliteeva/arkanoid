@@ -34,5 +34,4 @@ public class Board extends Sprite {
 		
 	}
 	
-	
 }

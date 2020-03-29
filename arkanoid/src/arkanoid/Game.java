@@ -131,6 +131,10 @@ public class Game {
 		 * bounceUp() -- pass board.getY()
 		 * 
 		 */
+		if (Segment.findIntersection(segment, new Segment(new Point(board.getX(), board.getY()), 
+				new Point(board.getX() + board.getLength(), board.getY()))) != null) {
+			ball.bounceUp(board.getY());
+		}
 	}
 
 	public void moveBoard(int distance) {
