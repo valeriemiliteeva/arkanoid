@@ -35,16 +35,11 @@ public class Game {
 			}
 		}
 		Ball ball = new Ball(BALL_RADIUS, BALL_COLOR);
-		ball.setX(250);
-		ball.setY(620);
-		ball.setAngle(45);
-		ball.setSpeed(INITIAL_SPEED);
 		balls.add(ball);
-		saveBallCenters();
+		resetBall();
 		
 		board = new Board(90, 15, Color.LIGHT_GRAY);
-		board.setX(205);
-		board.setY(630);
+		resetBoard();
 	}
 
 	public ArrayList<Sprite> getBlocks() {
@@ -64,7 +59,23 @@ public class Game {
 		Point oldCenter = ballCenters.get(ball);
 		Segment ballSeg = new Segment(oldCenter, new Point(ball.getX(), ball.getY()));
 		bounceFromBlocks(ballSeg, ball);
+		bounceOffBoard(ballSeg, ball);
+		restrainBoard();
 		saveBallCenters();
+	}
+	
+	public void resetBall()  {
+		Ball ball = (Ball) balls.get(0);
+		ball.setX(250);
+		ball.setY(620);
+		ball.setAngle(45);
+		ball.setSpeed(INITIAL_SPEED);
+		saveBallCenters();
+	}
+	
+	public void resetBoard() {
+		board.setX(205);
+		board.setY(630);
 	}
 
 	private void saveBallCenters() {
@@ -126,19 +137,16 @@ public class Game {
 	}
 	
 	private void bounceOffBoard(Segment segment, Ball ball) {
-		/* 
-		 * check if segment intersects top of board
-		 * bounceUp() -- pass board.getY()
-		 * 
-		 */
-		if (Segment.findIntersection(segment, new Segment(new Point(board.getX(), board.getY()), 
-				new Point(board.getX() + board.getLength(), board.getY()))) != null) {
-			ball.bounceUp(board.getY());
+		if (Segment.findIntersection(segment, board.getTopMidSeg()) != null) {
+			ball.bounceUp(board.getY() - 4);
+		} else if (Segment.findIntersection(segment, board.getTopRightSeg()) != null) {
+			ball.setAngle(ball.getAngle() );
+		} else if (Segment.findIntersection(segment, board.getTopLeftSeg()) != null) {
+			
 		}
 	}
 
-	public void moveBoard(int distance) {
-		board.setX(board.getX() + distance);
+	public void restrainBoard() {
 		if (board.getX() < 0) {
 			board.setX(0);
 		} else if (board.getX() > MainWindow.WIDTH - board.getLength()) {
