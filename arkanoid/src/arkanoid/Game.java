@@ -101,9 +101,6 @@ public class Game {
 				if (newIntersection == null) {
 					continue;
 				}
-				if (doubleEquals(block.x, 203) && doubleEquals(block.y, 140)) {
-					System.out.println(block);
-				}
 				double newDistanceFromOldCenter = Point.findDistance(oldCenter, newIntersection);
 				if (newDistanceFromOldCenter < distanceFromOldCenter) {
 					intersectionPoint = newIntersection;
@@ -115,9 +112,15 @@ public class Game {
 			if (intersectionPoint != null) {
 				// ball hit the block!
 				// bounce off of it
+				if (doubleEquals(block.x, 403) && doubleEquals(block.y, 100)) {
+					System.out.println(block);
+				}
 				bounceOffBlock(hitSegment, ball);
 				// hide block
 				block.setVisible(false);
+				// See if we hit other blocks
+				Segment newBallSeg = new Segment(intersectionPoint, new Point(ball.getX(), ball.getY()));
+				bounceFromBlocks(newBallSeg, ball);
 			}
 		}
 	}
@@ -125,16 +128,16 @@ public class Game {
 	private void bounceOffBlock(Segment segment, Ball ball) {
 		if (doubleEquals(segment.getStart().y, segment.getEnd().y)) {
 			if (doubleGreater(ball.y, segment.getStart().y)) {
-				ball.bounceUp(segment.getStart().y);
+				ball.bounceUp(segment.getStart().y + ball.getRadius());
 			} else {
-				ball.bounceDown(segment.getStart().y);
+				ball.bounceDown(segment.getStart().y - ball.getRadius());
 			}
 		}
 		if (doubleEquals(segment.getStart().x, segment.getEnd().x)) {
 			if (doubleGreater(ball.x, segment.getStart().x)) {
-				ball.bounceLeft(segment.getStart().x);
+				ball.bounceLeft(segment.getStart().x + ball.getRadius());
 			} else {
-				ball.bounceRight(segment.getStart().x);
+				ball.bounceRight(segment.getStart().x - ball.getRadius());
 			}
 		}
 	}
