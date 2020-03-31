@@ -59,8 +59,8 @@ public class Game {
 		Point oldCenter = ballCenters.get(ball);
 		Segment ballSeg = new Segment(oldCenter, new Point(ball.getX(), ball.getY()));
 		bounceFromBlocks(ballSeg, ball);
-		bounceOffBoard(ballSeg, ball);
-		restrainBoard();
+		//bounceOffBoard(ballSeg, ball);
+		//restrainBoard();
 		saveBallCenters();
 	}
 	
