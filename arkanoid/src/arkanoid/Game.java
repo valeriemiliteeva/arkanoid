@@ -101,6 +101,9 @@ public class Game {
 				if (newIntersection == null) {
 					continue;
 				}
+				if (doubleEquals(block.x, 203) && doubleEquals(block.y, 140)) {
+					System.out.println(block);
+				}
 				double newDistanceFromOldCenter = Point.findDistance(oldCenter, newIntersection);
 				if (newDistanceFromOldCenter < distanceFromOldCenter) {
 					intersectionPoint = newIntersection;
