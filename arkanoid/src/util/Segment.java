@@ -21,14 +21,22 @@ public class Segment {
 		return String.format("%s - %s", start, end);
 	}
 
+	public double findSlope() {
+		return (end.y - start.y) / (end.x - start.x);
+	}
+
+	public double findYIntercept() {
+		return start.y - (start.x * findSlope());
+	}
+
 	public static Point findIntersection(Segment s1, Segment s2) {
 		/*
 		 * method should return intersection point if one exists (otherwise null)
 		 */
-		double m1 = (s1.end.y - s1.start.y) / (s1.end.x - s1.start.x);
-		double m2 = (s2.end.y - s2.start.y) / (s2.end.x - s2.start.x);
-		double b1 = s1.start.y - (s1.start.x * m1);
-		double b2 = s2.start.y - (s2.start.x * m2);
+		double m1 = s1.findSlope();
+		double m2 = s2.findSlope();
+		double b1 = s1.findYIntercept();
+		double b2 = s2.findYIntercept();
 		// System.out.println("equation one: y = " + m1 + "x + " + b1 + "; equation two:
 		// y = " + m2 + "x + " + b2);
 		double xInt = -(b1 - b2) / (m1 - m2);
@@ -45,15 +53,12 @@ public class Segment {
 		}
 	}
 
-	private static boolean isBetween(Segment s, Point p) {
+	public static boolean isBetween(Segment s, Point p) {
 		double minX = Math.min(s.start.x, s.end.x);
 		double maxX = Math.max(s.start.x, s.end.x);
 		double minY = Math.min(s.start.y, s.end.y);
 		double maxY = Math.max(s.start.y, s.end.y);
-		if (minX - p.x <= 1e-6 &&
-				maxX - p.x >= -1e-6 &&
-				minY - p.y <= 1e-6 &&
-				maxY - p.y >= -1e-6) {
+		if (minX - p.x <= 1e-6 && maxX - p.x >= -1e-6 && minY - p.y <= 1e-6 && maxY - p.y >= -1e-6) {
 			return true;
 		}
 		return false;
