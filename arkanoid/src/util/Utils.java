@@ -1,5 +1,7 @@
 package util;
 
+import java.util.ArrayList;
+
 public class Utils {
 
 	static public boolean doubleEquals(double a, double b) {
@@ -34,21 +36,35 @@ public class Utils {
 		throw new RuntimeException("needs improvement");
 	}
 	
-	public static Point[] findCircleAndSegIntersection(Point center, double r, Segment seg, int quadrant) {
-		/*
-		 * return only points if they belong to given quadrant\
-		 * check that point belongs to given segment
-		 */
+	public static ArrayList<Point> findCircleAndSegIntersection(Point center, double r, Segment seg, int quadrant) {
 		double m = seg.findSlope();
 		double b = seg.findYIntercept();
 		double c = center.x;
 		double d = center.y;
 		double[] xVals = solveQuadraticFormula(1 + m * m, 2  * (m * b - m * d - c), c * c + (b - d) * (b - d) - r * r);
-		Point[] points = new Point[xVals.length];
+		ArrayList<Point> points = new ArrayList<>();
 		for (int i = 0; i < xVals.length; i++) {
-			points[i] = new Point(xVals[i], m * xVals[i] + b);
+			Point point = new Point(xVals[i], m * xVals[i] + b);
+			if (belongsToQuarterCircle(center, point, quadrant) && Segment.isBetween(seg, point)) {
+				points.add(point);
+			}
 		}
 		return points;
+	}
+	
+	public static Line findReflectionEquation(Line line1, Line line2) {
+		double a = line1.getA();
+		double b = line1.getB();
+		double c = line1.getC();
+		double d = line2.getA();
+		double e = line2.getB();
+		double f = line2.getC();
+		double h = ((c * d) - (a * f)) / ((b * d) - (a * e));
+		double k = ((c * e) - (b * f)) / ((a * e) - (b * d));
+		double beans = ((a * e * e) - (a * d * d) - (2 * b * d * e)) / ((b * e * e) - (b * d * d) + (2 * a * d * e));
+		Line reflectedLine = new Line(beans, h - beans * k);
+		return reflectedLine;
+		
 	}
 
 }
