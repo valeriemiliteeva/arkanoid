@@ -7,6 +7,7 @@ import java.util.HashMap;
 import arkanoid.ui.MainWindow;
 import util.Point;
 import util.Segment;
+import util.Utils;
 
 import static util.Utils.doubleEquals;
 import static util.Utils.doubleGreater;
@@ -90,54 +91,70 @@ public class Game {
 			if (!sprite.isVisible()) {
 				continue;
 			}
-			Point oldCenter = ballSeg.getStart();
-			Point intersectionPoint = null;
-			double distanceFromOldCenter = Double.MAX_VALUE;
-			Segment hitSegment = null;
 
 			Block block = (Block) sprite;
-			for (Segment blockSeg : block.getSegments(ball.getRadius())) {
-				Point newIntersection = Segment.findIntersection(ballSeg, blockSeg);
-				if (newIntersection == null) {
-					continue;
-				}
-				double newDistanceFromOldCenter = Point.findDistance(oldCenter, newIntersection);
-				if (newDistanceFromOldCenter < distanceFromOldCenter) {
-					intersectionPoint = newIntersection;
-					distanceFromOldCenter = newDistanceFromOldCenter;
-					hitSegment = blockSeg;
-				}
-			}
-			// intersectionPoint now is the closest intersection from old center
-			if (intersectionPoint != null) {
-				// ball hit the block!
-				// bounce off of it
-				bounceOffBlock(hitSegment, ball);
-				bounceOffBlockCorners(block, ball);
-				// hide block
-				block.setVisible(false);
+			if (!bounceOffBlockSides(block, ball, ballSeg)) {
+				bounceOffBlockCorners(block, ball, ballSeg);
 			}
 		}
 	}
 
-	private void bounceOffBlock(Segment segment, Ball ball) {
-		if (doubleEquals(segment.getStart().y, segment.getEnd().y)) {
-			if (doubleGreater(ball.y, segment.getStart().y)) {
-				ball.bounceUp(segment.getStart().y);
+	private void bounceOffBlock(Segment blockSide, Ball ball) {
+		if (doubleEquals(blockSide.getStart().y, blockSide.getEnd().y)) {
+			if (doubleGreater(ball.y, blockSide.getStart().y)) {
+				ball.bounceUp(blockSide.getStart().y);
 			} else {
-				ball.bounceDown(segment.getStart().y);
+				ball.bounceDown(blockSide.getStart().y);
 			}
 		}
-		if (doubleEquals(segment.getStart().x, segment.getEnd().x)) {
-			if (doubleGreater(ball.x, segment.getStart().x)) {
-				ball.bounceLeft(segment.getStart().x);
+		if (doubleEquals(blockSide.getStart().x, blockSide.getEnd().x)) {
+			if (doubleGreater(ball.x, blockSide.getStart().x)) {
+				ball.bounceLeft(blockSide.getStart().x);
 			} else {
-				ball.bounceRight(segment.getStart().x);
+				ball.bounceRight(blockSide.getStart().x);
 			}
 		}
 	}
 	
-	private void bounceOffBlockCorners(Block block, Ball ball) {
+	private boolean bounceOffBlockSides(Block block, Ball ball, Segment ballSeg) {
+		Point oldCenter = ballSeg.getStart();
+		Point intersectionPoint = null;
+		double distanceFromOldCenter = Double.MAX_VALUE;
+		Segment hitSegment = null;
+		for (Segment blockSeg : block.getSegments(ball.getRadius())) {
+			Point newIntersection = Segment.findIntersection(ballSeg, blockSeg);
+			if (newIntersection == null) {
+				continue;
+			}
+			double newDistanceFromOldCenter = Point.findDistance(oldCenter, newIntersection);
+			if (newDistanceFromOldCenter < distanceFromOldCenter) {
+				intersectionPoint = newIntersection;
+				distanceFromOldCenter = newDistanceFromOldCenter;
+				hitSegment = blockSeg;
+			}
+		}
+		// intersectionPoint now is the closest intersection from old center
+		if (intersectionPoint != null) {
+			// ball hit the block!
+			// bounce off of it
+			bounceOffBlock(hitSegment, ball);
+			// hide block
+			block.setVisible(false);
+			return true;
+		} 
+		return false;
+	}
+	
+	private void bounceOffBlockCorners(Block block, Ball ball, Segment ballSeg) {
+		ArrayList<Point> points = new ArrayList<>();
+		for (int quadrant = 1; quadrant <= 4; quadrant++) {
+			points.addAll(Utils.findCircleAndSegIntersection(
+					block.getCorner(quadrant), ball.getRadius(), ballSeg, quadrant));
+		}
+		Point intersectionPoint = Utils.findClosestPoint(ballSeg.getStart(), points);
+		if (intersectionPoint == null) {
+			return;
+		}
 		
 	}
 	

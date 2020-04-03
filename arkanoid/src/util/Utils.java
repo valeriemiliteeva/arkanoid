@@ -11,6 +11,19 @@ public class Utils {
 	static public boolean doubleGreater(double a, double b) {
 		return a - b > -1e-6;
 	}
+	
+	public static Point findClosestPoint(Point start, ArrayList<Point> points) {
+		double minDistance = Double.MAX_VALUE;
+		Point closestPoint = null;
+		for (Point point : points) {
+			double distance = Point.findDistance(point, start);
+			if (distance <  minDistance) {
+				minDistance = distance;
+				closestPoint = point;
+			}
+		}
+		return closestPoint;
+	}
 
 	static public double[] solveQuadraticFormula(double a, double b, double c) {
 		if (a == 0) {
