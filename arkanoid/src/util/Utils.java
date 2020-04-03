@@ -52,18 +52,18 @@ public class Utils {
 		return points;
 	}
 	
-	public static Line findReflectionEquation(Line line1, Line line2) {
-		double a = line1.getA();
-		double b = line1.getB();
-		double c = line1.getC();
-		double d = line2.getA();
-		double e = line2.getB();
-		double f = line2.getC();
+	public static Line findReflectionEquation(Line light, Line wall) {
+		double a = light.getA();
+		double b = light.getB();
+		double c = light.getC();
+		double d = wall.getA();
+		double e = wall.getB();
+		double f = wall.getC();
 		double h = ((c * d) - (a * f)) / ((b * d) - (a * e));
 		double k = ((c * e) - (b * f)) / ((a * e) - (b * d));
 		double beans = ((a * e * e) - (a * d * d) - (2 * b * d * e)) / ((b * e * e) - (b * d * d) + (2 * a * d * e));
-		Line reflectedLine = new Line(beans, h - beans * k);
-		return reflectedLine;
+		Line reflectedLight = new Line(beans, h - beans * k);
+		return reflectedLight;
 		
 	}
 

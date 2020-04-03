@@ -113,7 +113,7 @@ public class Game {
 				// ball hit the block!
 				// bounce off of it
 				bounceOffBlock(hitSegment, ball);
-				bounceOffBlockAngles(block, ball);
+				bounceOffBlockCorners(block, ball);
 				// hide block
 				block.setVisible(false);
 			}
@@ -137,8 +137,8 @@ public class Game {
 		}
 	}
 	
-	private void bounceOffBlockAngles(Block block, Ball ball) {
-	
+	private void bounceOffBlockCorners(Block block, Ball ball) {
+		
 	}
 	
 	private void bounceOffBoard(Segment segment, Ball ball) {
