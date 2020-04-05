@@ -9,13 +9,13 @@ public class Line {
 		this.slope = slope;
 		this.yInt = yInt;
 	}
-	
+
 	public Line(Point p1, Point p2) {
 		Segment seg = new Segment(p1, p2);
 		this.slope = seg.findSlope();
-		this.yInt  = seg.findYIntercept();
+		this.yInt = seg.findYIntercept();
 	}
-	
+
 	public String toString() {
 		return String.format("y = %.2f * x + %.2f", slope, yInt);
 	}
@@ -38,5 +38,9 @@ public class Line {
 
 	public double getC() {
 		return -yInt;
+	}
+
+	public double calculateY(double x) {
+		return slope * x + yInt;
 	}
 }

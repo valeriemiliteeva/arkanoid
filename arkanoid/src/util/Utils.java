@@ -79,5 +79,9 @@ public class Utils {
 		return reflectedLight;
 		
 	}
+	
+	public static double radiansToDegrees(double radians) {
+		return (radians * 180) / Math.PI;
+	}
 
 }

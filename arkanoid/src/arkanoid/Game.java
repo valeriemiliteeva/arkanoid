@@ -40,7 +40,7 @@ public class Game {
 		Ball ball = new Ball(BALL_RADIUS, BALL_COLOR);
 		balls.add(ball);
 		resetBall();
-		
+
 		board = new Board(90, 15, Color.LIGHT_GRAY);
 		resetBoard();
 	}
@@ -52,7 +52,7 @@ public class Game {
 	public ArrayList<Sprite> getBalls() {
 		return balls;
 	}
-	
+
 	public Board getBoard() {
 		return board;
 	}
@@ -62,12 +62,12 @@ public class Game {
 		Point oldCenter = ballCenters.get(ball);
 		Segment ballSeg = new Segment(oldCenter, new Point(ball.getX(), ball.getY()));
 		bounceFromBlocks(ballSeg, ball);
-		//bounceOffBoard(ballSeg, ball);
-		//restrainBoard();
+		// bounceOffBoard(ballSeg, ball);
+		// restrainBoard();
 		saveBallCenters();
 	}
-	
-	public void resetBall()  {
+
+	public void resetBall() {
 		Ball ball = (Ball) balls.get(0);
 		ball.setX(250);
 		ball.setY(620);
@@ -75,7 +75,7 @@ public class Game {
 		ball.setSpeed(INITIAL_SPEED);
 		saveBallCenters();
 	}
-	
+
 	public void resetBoard() {
 		board.setX(205);
 		board.setY(630);
@@ -117,7 +117,7 @@ public class Game {
 			}
 		}
 	}
-	
+
 	private boolean bounceOffBlockSides(Block block, Ball ball, Segment ballSeg) {
 		Point oldCenter = ballSeg.getStart();
 		Point intersectionPoint = null;
@@ -140,19 +140,24 @@ public class Game {
 			// ball hit the block!
 			// bounce off of it
 			bounceOffBlock(hitSegment, ball);
+			/*
+			 * making the ball stay where it hit the block, only changing the angle, not the location
+			 */
+			ball.setX(intersectionPoint.x);
+			ball.setY(intersectionPoint.y);
 			// hide block
 			block.setVisible(false);
 			return true;
-		} 
+		}
 		return false;
 	}
-	
+
 	private void bounceOffBlockCorners(Block block, Ball ball, Segment ballSeg) {
 		ArrayList<PointWithQuadrant> points = new ArrayList<>();
-		
+
 		for (int quadrant = 1; quadrant <= 4; quadrant++) {
-			points.addAll(Utils.findCircleAndSegIntersection(
-					block.getCorner(quadrant), ball.getRadius(), ballSeg, quadrant));
+			points.addAll(
+					Utils.findCircleAndSegIntersection(block.getCorner(quadrant), ball.getRadius(), ballSeg, quadrant));
 		}
 		PointWithQuadrant intersectionPoint = Utils.findClosestPoint(ballSeg.getStart(), points);
 		if (intersectionPoint == null) {
@@ -164,24 +169,69 @@ public class Game {
 		Line tangentLine = new Line(-(1.0 / m), intersectionPoint.y + (1.0 / m) * intersectionPoint.x);
 		Line lightLine = new Line(ballSeg.getStart(), ballSeg.getEnd());
 		Line reflectedLine = Utils.findReflectionEquation(lightLine, tangentLine);
+
 		/*
-		 * find second point on the reflected line which is in the direction the ball will go next
-		 * if this point is higher than the intersectionPoint then angle is less than 180
-		 * otherwise it is greater than 180
+		 * find second point on the reflected line which is in the direction the ball
+		 * will go next if this point is higher than the intersectionPoint then angle is
+		 * less than 180 otherwise it is greater than 180
 		 */
-		ball.setAngle(0);
-		//placeholder ^^^
-		ball.setX(ball.x);
-		ball.setY(ball.y);
+		ball.setX(intersectionPoint.x);
+		ball.setY(intersectionPoint.y);
+		ball.setAngle(findAngle(cornerPoint, ball, reflectedLine));
 	}
-	
+
+	private int findAngle(Point cornerPoint, Ball ball, Line reflectedLine) {
+		Point pLeft = new Point(ball.x - 1, reflectedLine.calculateY(ball.x - 1));
+		Point pRight = new Point(ball.x + 1, reflectedLine.calculateY(ball.x + 1));
+		double leftDistance = Point.findDistance(pLeft, cornerPoint);
+		double rightDistance = Point.findDistance(pRight, cornerPoint);
+		Point outsidePoint = null;
+		if (leftDistance > ball.getRadius()) {
+			outsidePoint = pLeft;
+		}
+		if (rightDistance > ball.getRadius()) {
+			if (outsidePoint != null) {
+				return ball.getAngle();
+				/*
+				 * ensures the angle of the ball doesn't actually change because it didn't
+				 * actually hit the block, so we do not reflect
+				 */
+			}
+			outsidePoint = pRight;
+		}
+		if (outsidePoint == null) {
+			System.out.println("wack 1");
+		}
+		double angle = Utils.radiansToDegrees(Math.atan(reflectedLine.getSlope()));
+		if (outsidePoint.x > ball.x && outsidePoint.y < ball.y) {
+			if (angle < 0) {
+				System.out.println("wack 2");
+			}
+		} else if (outsidePoint.x > ball.x && outsidePoint.y > ball.y) {
+			if (angle > 0) {
+				System.out.println("wack 3");
+			}
+		} else if (outsidePoint.x < ball.x && outsidePoint.y > ball.y) {
+			if (angle < 0) {
+				System.out.println("wack 4");
+			}
+			angle = angle + 180;
+		} else if (outsidePoint.x < ball.x && outsidePoint.y < ball.y) {
+			if(angle > 0) {
+				System.out.println("wack 5");
+			}
+			angle = angle + 180;
+		}
+		return (int) Math.round(angle);
+	}
+
 	private void bounceOffBoard(Segment segment, Ball ball) {
 		if (Segment.findIntersection(segment, board.getTopMidSeg()) != null) {
 			ball.bounceUp(board.getY() - 4);
 		} else if (Segment.findIntersection(segment, board.getTopRightSeg()) != null) {
-			ball.setAngle(ball.getAngle() );
+			ball.setAngle(ball.getAngle());
 		} else if (Segment.findIntersection(segment, board.getTopLeftSeg()) != null) {
-			//wot r u doin
+			// wot r u doin
 		}
 	}
 
