@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import arkanoid.ui.MainWindow;
+import util.Line;
 import util.Point;
+import util.PointWithQuadrant;
 import util.Segment;
 import util.Utils;
 
@@ -146,16 +148,31 @@ public class Game {
 	}
 	
 	private void bounceOffBlockCorners(Block block, Ball ball, Segment ballSeg) {
-		ArrayList<Point> points = new ArrayList<>();
+		ArrayList<PointWithQuadrant> points = new ArrayList<>();
+		
 		for (int quadrant = 1; quadrant <= 4; quadrant++) {
 			points.addAll(Utils.findCircleAndSegIntersection(
 					block.getCorner(quadrant), ball.getRadius(), ballSeg, quadrant));
 		}
-		Point intersectionPoint = Utils.findClosestPoint(ballSeg.getStart(), points);
+		PointWithQuadrant intersectionPoint = Utils.findClosestPoint(ballSeg.getStart(), points);
 		if (intersectionPoint == null) {
 			return;
 		}
-		
+		Point cornerPoint = block.getCorner(intersectionPoint.getQuadrant());
+		Line cornerLine = new Line(intersectionPoint, cornerPoint);
+		double m = cornerLine.getSlope();
+		Line tangentLine = new Line(-(1.0 / m), intersectionPoint.y + (1.0 / m) * intersectionPoint.x);
+		Line lightLine = new Line(ballSeg.getStart(), ballSeg.getEnd());
+		Line reflectedLine = Utils.findReflectionEquation(lightLine, tangentLine);
+		/*
+		 * find second point on the reflected line which is in the direction the ball will go next
+		 * if this point is higher than the intersectionPoint then angle is less than 180
+		 * otherwise it is greater than 180
+		 */
+		ball.setAngle(0);
+		//placeholder ^^^
+		ball.setX(ball.x);
+		ball.setY(ball.y);
 	}
 	
 	private void bounceOffBoard(Segment segment, Ball ball) {
@@ -164,7 +181,7 @@ public class Game {
 		} else if (Segment.findIntersection(segment, board.getTopRightSeg()) != null) {
 			ball.setAngle(ball.getAngle() );
 		} else if (Segment.findIntersection(segment, board.getTopLeftSeg()) != null) {
-			
+			//wot r u doin
 		}
 	}
 

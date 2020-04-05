@@ -64,19 +64,4 @@ public class Segment {
 		return false;
 	}
 
-	public static void main(String args[]) {
-		Point st1 = new Point(6.0, 4.0);
-		Point end1 = new Point(4.0, 8.0);
-		Point end2 = new Point(6.0, 3.0);
-		Point st2 = new Point(0.0, 9.0);
-		Segment s1 = new Segment(st1, end1);
-		Segment s2 = new Segment(st2, end2);
-		Point iPoint = findIntersection(s1, s2);
-		if (iPoint != null) {
-			System.out.println("Intersection point: (" + iPoint.x + ", " + iPoint.y + ")");
-		} else {
-			System.out.println("Segments do not intersect");
-		}
-	}
-
 }

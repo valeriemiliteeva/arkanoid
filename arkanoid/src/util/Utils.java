@@ -12,10 +12,10 @@ public class Utils {
 		return a - b > -1e-6;
 	}
 	
-	public static Point findClosestPoint(Point start, ArrayList<Point> points) {
+	public static <T extends Point> T findClosestPoint(Point start, ArrayList<T> points) {
 		double minDistance = Double.MAX_VALUE;
-		Point closestPoint = null;
-		for (Point point : points) {
+		T closestPoint = null;
+		for (T point : points) {
 			double distance = Point.findDistance(point, start);
 			if (distance <  minDistance) {
 				minDistance = distance;
@@ -49,15 +49,15 @@ public class Utils {
 		throw new RuntimeException("needs improvement");
 	}
 	
-	public static ArrayList<Point> findCircleAndSegIntersection(Point center, double r, Segment seg, int quadrant) {
+	public static ArrayList<PointWithQuadrant> findCircleAndSegIntersection(Point center, double r, Segment seg, int quadrant) {
 		double m = seg.findSlope();
 		double b = seg.findYIntercept();
 		double c = center.x;
 		double d = center.y;
 		double[] xVals = solveQuadraticFormula(1 + m * m, 2  * (m * b - m * d - c), c * c + (b - d) * (b - d) - r * r);
-		ArrayList<Point> points = new ArrayList<>();
+		ArrayList<PointWithQuadrant> points = new ArrayList<>();
 		for (int i = 0; i < xVals.length; i++) {
-			Point point = new Point(xVals[i], m * xVals[i] + b);
+			PointWithQuadrant point = new PointWithQuadrant(xVals[i], m * xVals[i] + b, quadrant);
 			if (belongsToQuarterCircle(center, point, quadrant) && Segment.isBetween(seg, point)) {
 				points.add(point);
 			}

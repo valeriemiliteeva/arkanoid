@@ -41,13 +41,13 @@ public class Block extends Sprite {
 
 	public Point getCorner(int quadrant) {
 		if (quadrant == 1) {
-			return new Point(x, y);
-		} else if (quadrant == 2) {
 			return new Point(x + width, y);
+		} else if (quadrant == 2) {
+			return new Point(x, y);
 		} else if (quadrant == 3) {
-			return new Point(x + width, y + height);
-		} else if (quadrant == 4) {
 			return new Point(x, y + height);
+		} else if (quadrant == 4) {
+			return new Point(x + width, y + height);
 		}
 		throw new RuntimeException("no");
 	}
