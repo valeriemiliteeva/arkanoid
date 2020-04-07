@@ -95,8 +95,19 @@ public class Game {
 			}
 
 			Block block = (Block) sprite;
-			if (!bounceOffBlockSides(block, ball, ballSeg)) {
-				bounceOffBlockCorners(block, ball, ballSeg);
+			if (bounceOffBlockSides(block, ball, ballSeg)) {
+				return;
+			}
+		}
+
+		for (Sprite sprite : blocks) {
+			if (!sprite.isVisible()) {
+				continue;
+			}
+
+			Block block = (Block) sprite;
+			if (bounceOffBlockCorners(block, ball, ballSeg)) {
+				return;
 			}
 		}
 	}
@@ -141,7 +152,8 @@ public class Game {
 			// bounce off of it
 			bounceOffBlock(hitSegment, ball);
 			/*
-			 * making the ball stay where it hit the block, only changing the angle, not the location
+			 * making the ball stay where it hit the block, only changing the angle, not the
+			 * location
 			 */
 			ball.setX(intersectionPoint.x);
 			ball.setY(intersectionPoint.y);
@@ -152,7 +164,7 @@ public class Game {
 		return false;
 	}
 
-	private void bounceOffBlockCorners(Block block, Ball ball, Segment ballSeg) {
+	private boolean bounceOffBlockCorners(Block block, Ball ball, Segment ballSeg) {
 		ArrayList<PointWithQuadrant> points = new ArrayList<>();
 
 		for (int quadrant = 1; quadrant <= 4; quadrant++) {
@@ -161,7 +173,7 @@ public class Game {
 		}
 		PointWithQuadrant intersectionPoint = Utils.findClosestPoint(ballSeg.getStart(), points);
 		if (intersectionPoint == null) {
-			return;
+			return false;
 		}
 		Point cornerPoint = block.getCorner(intersectionPoint.getQuadrant());
 		Line cornerLine = new Line(intersectionPoint, cornerPoint);
@@ -178,6 +190,8 @@ public class Game {
 		ball.setX(intersectionPoint.x);
 		ball.setY(intersectionPoint.y);
 		ball.setAngle(findAngle(cornerPoint, ball, reflectedLine));
+		return true;
+
 	}
 
 	private int findAngle(Point cornerPoint, Ball ball, Line reflectedLine) {
@@ -217,7 +231,7 @@ public class Game {
 			}
 			angle = angle + 180;
 		} else if (outsidePoint.x < ball.x && outsidePoint.y < ball.y) {
-			if(angle > 0) {
+			if (angle > 0) {
 				System.out.println("wack 5");
 			}
 			angle = angle + 180;
