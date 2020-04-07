@@ -22,11 +22,11 @@ public class Segment {
 	}
 
 	public double findSlope() {
-		return (end.y - start.y) / (end.x - start.x);
+		return (start.y - end.y) / (end.x - start.x);
 	}
 
 	public double findYIntercept() {
-		return start.y - (start.x * findSlope());
+		return start.y + (start.x * findSlope());
 	}
 
 	public static Point findIntersection(Segment s1, Segment s2) {
@@ -39,8 +39,8 @@ public class Segment {
 		double b2 = s2.findYIntercept();
 		// System.out.println("equation one: y = " + m1 + "x + " + b1 + "; equation two:
 		// y = " + m2 + "x + " + b2);
-		double xInt = -(b1 - b2) / (m1 - m2);
-		double yInt = m1 * xInt + b1;
+		double xInt = (b2 - b1) / (m2 - m1);
+		double yInt = - m1 * xInt + b1;
 		if (Math.abs(m1 - m2) < 1e-6) {
 			return null;
 		} else {
