@@ -29,14 +29,14 @@ public class Game {
 	private HashMap<Ball, Point> ballCenters = new HashMap<>();
 
 	public Game() {
-		for (int j = 0; j < 6; j++) {
-			for (int i = 0; i < 10; i++) {
-				Block block = new Block(47, 17, COLORS[j]);
-				blocks.add(block);
-				block.setX(3 + i * 50);
-				block.setY(60 + j * 20);
-			}
-		}
+//		for (int j = 0; j < 6; j++) {
+//			for (int i = 0; i < 10; i++) {
+//				Block block = new Block(47, 17, COLORS[j]);
+//				blocks.add(block);
+//				block.setX(3 + i * 50);
+//				block.setY(60 + j * 20);
+//			}
+//		}
 		Ball ball = new Ball(BALL_RADIUS, BALL_COLOR);
 		balls.add(ball);
 		resetBall();
@@ -70,7 +70,7 @@ public class Game {
 	public void resetBall() {
 		Ball ball = (Ball) balls.get(0);
 		ball.setX(250);
-		ball.setY(620);
+		ball.setY(80);
 		ball.setAngle(45);
 		ball.setSpeed(INITIAL_SPEED);
 		saveBallCenters();
@@ -178,7 +178,8 @@ public class Game {
 		Point cornerPoint = block.getCorner(intersectionPoint.getQuadrant());
 		Line cornerLine = new Line(intersectionPoint, cornerPoint);
 		double m = cornerLine.getSlope();
-		Line tangentLine = new Line(-(1.0 / m), intersectionPoint.y + (1.0 / m) * intersectionPoint.x);
+		double reciprocal = Utils.doubleDivide(1, m);
+		Line tangentLine = new Line(- reciprocal, intersectionPoint.y + reciprocal * intersectionPoint.x);
 		Line lightLine = new Line(ballSeg.getStart(), ballSeg.getEnd());
 		Line reflectedLine = Utils.findReflectionEquation(lightLine, tangentLine);
 

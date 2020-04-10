@@ -22,7 +22,7 @@ public class Segment {
 	}
 
 	public double findSlope() {
-		return (start.y - end.y) / (end.x - start.x);
+		return Utils.doubleDivide(start.y - end.y, end.x - start.x);
 	}
 
 	public double findYIntercept() {
@@ -39,7 +39,7 @@ public class Segment {
 		double b2 = s2.findYIntercept();
 		// System.out.println("equation one: y = " + m1 + "x + " + b1 + "; equation two:
 		// y = " + m2 + "x + " + b2);
-		double xInt = (b2 - b1) / (m2 - m1);
+		double xInt = Utils.doubleDivide(b2 - b1, m2 - m1);
 		double yInt = - m1 * xInt + b1;
 		if (Math.abs(m1 - m2) < 1e-6) {
 			return null;

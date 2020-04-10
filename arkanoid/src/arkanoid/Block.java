@@ -18,7 +18,7 @@ public class Block extends Sprite {
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
+	public void draw(Graphics2D g, int screenHeight) {
 		g.setColor(getColor());
 		g.fillRect(round(x), round(y), width, height);
 	}
