@@ -69,7 +69,7 @@ abstract public class Sprite {
 		return (angle * Math.PI) / 180;
 	}
 
-	abstract public void draw(Graphics2D g);
+	abstract public void draw(Graphics2D g, int screenHeight);
 
 	public Color getColor() {
 		return color;
@@ -80,36 +80,36 @@ abstract public class Sprite {
 	}
 
 	public void bounce(int maxX, int maxY) {
-
 	}
 
+	// fixed for proper coordinates
 	public void move(double pixels, int maxX, int maxY) {
 		double dx;
 		double dy;
 		if (angle < 90) {
 			dx = pixels / Math.sqrt((1 + Math.pow(Math.tan(angleInRadians()), 2)));
-			dy = -dx * (Math.tan(angleInRadians()));
+			dy = dx * (Math.tan(angleInRadians()));
 		} else if (angle == 90) {
 			dx = 0;
-			dy = -pixels;
+			dy = pixels;
 		} else if (angle < 180) {
 			double angle2 = Math.PI - angleInRadians();
 			dx = -pixels / Math.sqrt((1 + Math.pow(Math.tan(angle2), 2)));
-			dy = dx * (Math.tan(angle2));
+			dy = -dx * (Math.tan(angle2));
 		} else if (angle == 180) {
 			dx = -pixels;
 			dy = 0;
 		} else if (angle < 270) {
 			double angle2 = angleInRadians() - Math.PI;
 			dx = -pixels / Math.sqrt((1 + Math.pow(Math.tan(angle2), 2)));
-			dy = -dx * (Math.tan(angle2));
+			dy = dx * (Math.tan(angle2));
 		} else if (angle == 270) {
 			dx = 0;
-			dy = pixels;
+			dy = -pixels;
 		} else {
 			double angle2 = 2 * Math.PI - angleInRadians();
 			dx = pixels / Math.sqrt((1 + Math.pow(Math.tan(angle2), 2)));
-			dy = dx * (Math.tan(angle2));
+			dy = -dx * (Math.tan(angle2));
 		}
 		x += dx;
 		y += dy;

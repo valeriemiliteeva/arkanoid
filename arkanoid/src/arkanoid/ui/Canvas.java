@@ -27,7 +27,7 @@ public class Canvas extends JComponent {
     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     for (Sprite sprite: screen.getSprites()) {
       if (sprite.isVisible()) {
-    	  sprite.draw(g2d);
+    	  sprite.draw(g2d, screen.getHeight());
       }
     }
   }

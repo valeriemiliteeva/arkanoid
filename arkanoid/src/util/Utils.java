@@ -11,6 +11,10 @@ public class Utils {
 	static public boolean doubleGreater(double a, double b) {
 		return a - b > -1e-6;
 	}
+
+	static public double doubleDivide(double a, double b) {
+		return a / (doubleEquals(b, 0) ? 1e-6 : b);
+	}
 	
 	public static <T extends Point> T findClosestPoint(Point start, ArrayList<T> points) {
 		double minDistance = Double.MAX_VALUE;
@@ -26,8 +30,8 @@ public class Utils {
 	}
 
 	static public double[] solveQuadraticFormula(double a, double b, double c) {
-		if (a == 0) {
-			return new double[] { -c / b };
+		if (Utils.doubleEquals(a, 0)) {
+			return new double[] { - Utils.doubleDivide(c, b) };
 		}
 		double discriminant = b * b - 4 * a * c;
 		if (discriminant < 0) {
@@ -50,14 +54,17 @@ public class Utils {
 	}
 	
 	public static ArrayList<PointWithQuadrant> findCircleAndSegIntersection(Point center, double r, Segment seg, int quadrant) {
-		double m = seg.findSlope();
-		double b = seg.findYIntercept();
+		double m = seg.getSlope();
+		double b = seg.getyInt();
 		double c = center.x;
 		double d = center.y;
-		double[] xVals = solveQuadraticFormula(1 + m * m, 2  * (m * b - m * d - c), c * c + (b - d) * (b - d) - r * r);
+		double[] xVals = solveQuadraticFormula(1 + m * m, (-2) * (m * (d - b) + c), c * c + (b - d) * (b - d) - r * r);
 		ArrayList<PointWithQuadrant> points = new ArrayList<>();
 		for (int i = 0; i < xVals.length; i++) {
 			PointWithQuadrant point = new PointWithQuadrant(xVals[i], m * xVals[i] + b, quadrant);
+			if (Segment.isBetween(seg, point)) {
+				System.out.println("isBetween");
+			}
 			if (belongsToQuarterCircle(center, point, quadrant) && Segment.isBetween(seg, point)) {
 				points.add(point);
 			}

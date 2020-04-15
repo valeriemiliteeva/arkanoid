@@ -29,7 +29,7 @@ public class Board extends Sprite {
 
 
 	@Override
-	public void draw(Graphics2D g) {
+	public void draw(Graphics2D g, int screenHeight) {
 		g.setColor(getColor());
 		g.fillRect(round(x) + SIDE_LENGTH, round(y), length - 2 * SIDE_LENGTH, height);
 		g.setColor(Color.GRAY);

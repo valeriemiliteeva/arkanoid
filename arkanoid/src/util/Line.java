@@ -2,8 +2,8 @@ package util;
 
 public class Line {
 
-	private double slope;
-	private double yInt;
+	protected double slope;
+	protected double yInt;
 
 	public Line(double slope, double yInt) {
 		this.slope = slope;
@@ -11,9 +11,8 @@ public class Line {
 	}
 
 	public Line(Point p1, Point p2) {
-		Segment seg = new Segment(p1, p2);
-		this.slope = seg.findSlope();
-		this.yInt = seg.findYIntercept();
+		slope = Segment.findSlope(p1, p2);
+		yInt = Segment.findYIntercept(p1, slope);
 	}
 
 	public String toString() {
@@ -41,6 +40,6 @@ public class Line {
 	}
 
 	public double calculateY(double x) {
-		return -slope * x + yInt;
+		return slope * x + yInt;
 	}
 }
