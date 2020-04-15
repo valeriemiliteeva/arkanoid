@@ -41,6 +41,6 @@ public class Line {
 	}
 
 	public double calculateY(double x) {
-		return slope * x + yInt;
+		return -slope * x + yInt;
 	}
 }
