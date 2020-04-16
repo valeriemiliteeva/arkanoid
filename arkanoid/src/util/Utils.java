@@ -8,10 +8,14 @@ public class Utils {
 		return Math.abs(a - b) < 1e-6;
 	}
 
-	static public boolean doubleGreater(double a, double b) {
-		return a - b > -1e-6;
+	static public boolean doubleGreaterOrEqual(double a, double b) {
+		return a - b > -1e-8;
 	}
 
+	static public boolean doubleGreater(double a, double b) {
+		return a - b > 1e-8;
+	}
+	
 	static public double doubleDivide(double a, double b) {
 		return a / (doubleEquals(b, 0) ? 1e-6 : b);
 	}

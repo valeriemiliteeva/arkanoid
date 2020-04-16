@@ -12,7 +12,7 @@ import util.Segment;
 import util.Utils;
 
 import static util.Utils.doubleEquals;
-import static util.Utils.doubleGreater;
+import static util.Utils.doubleGreaterOrEqual;
 
 public class Game {
 
@@ -112,16 +112,16 @@ public class Game {
 		}
 	}
 
-	private void bounceOffBlock(Segment blockSide, Ball ball) {
+	public static void bounceOffBlock(Segment blockSide, Ball ball) {
 		if (doubleEquals(blockSide.getStart().y, blockSide.getEnd().y)) {
-			if (doubleGreater(ball.y, blockSide.getStart().y)) {
+			if (doubleGreaterOrEqual(ball.y, blockSide.getStart().y)) {
 				ball.bounceUp(blockSide.getStart().y);
 			} else {
 				ball.bounceDown(blockSide.getStart().y);
 			}
 		}
 		if (doubleEquals(blockSide.getStart().x, blockSide.getEnd().x)) {
-			if (doubleGreater(ball.x, blockSide.getStart().x)) {
+			if (doubleGreaterOrEqual(ball.x, blockSide.getStart().x)) {
 				ball.bounceLeft(blockSide.getStart().x);
 			} else {
 				ball.bounceRight(blockSide.getStart().x);
@@ -129,7 +129,7 @@ public class Game {
 		}
 	}
 
-	private boolean bounceOffBlockSides(Block block, Ball ball, Segment ballSeg) {
+	public static boolean bounceOffBlockSides(Block block, Ball ball, Segment ballSeg) {
 		Point oldCenter = ballSeg.getStart();
 		Point intersectionPoint = null;
 		double distanceFromOldCenter = Double.MAX_VALUE;
@@ -157,6 +157,7 @@ public class Game {
 			 */
 			ball.setX(intersectionPoint.x);
 			ball.setY(intersectionPoint.y);
+			ball.move(0.0001, 99999, 99999);
 			// hide block
 			block.setVisible(false);
 			return true;

@@ -6,6 +6,8 @@ public class Segment extends Line {
 
 	public Segment(Point start, Point end) {
 		super(start, end);
+		this.start = start;
+		this.end = end;
 	}
 
 	public Point getStart() {
@@ -21,11 +23,11 @@ public class Segment extends Line {
 	}
 
 	public static double findSlope(Point start, Point end) {
-		return Utils.doubleDivide(start.y - end.y, end.x - start.x);
+		return Utils.doubleDivide(start.y - end.y, start.x - end.x);
 	}
 
 	public static double findYIntercept(Point start, double slope) {
-		return start.y + (start.x * slope);
+		return start.y - (start.x * slope);
 	}
 
 	public static Point findIntersection(Segment s1, Segment s2) {
@@ -57,8 +59,8 @@ public class Segment extends Line {
 		double maxX = Math.max(s.start.x, s.end.x);
 		double minY = Math.min(s.start.y, s.end.y);
 		double maxY = Math.max(s.start.y, s.end.y);
-		if (Utils.doubleGreater(p.x, minX) && Utils.doubleGreater(maxX, p.x) && 
-				Utils.doubleGreater(p.y, minY) && Utils.doubleGreater(maxY, p.y)) {
+		if (Utils.doubleGreaterOrEqual(p.x, minX) && Utils.doubleGreaterOrEqual(maxX, p.x) && 
+				Utils.doubleGreaterOrEqual(p.y, minY) && Utils.doubleGreaterOrEqual(maxY, p.y)) {
 			return true;
 		}
 		return false;
