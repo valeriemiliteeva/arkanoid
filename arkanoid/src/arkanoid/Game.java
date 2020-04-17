@@ -165,7 +165,7 @@ public class Game {
 		return false;
 	}
 
-	private boolean bounceOffBlockCorners(Block block, Ball ball, Segment ballSeg) {
+	public static boolean bounceOffBlockCorners(Block block, Ball ball, Segment ballSeg) {
 		ArrayList<PointWithQuadrant> points = new ArrayList<>();
 
 		for (int quadrant = 1; quadrant <= 4; quadrant++) {
@@ -191,12 +191,13 @@ public class Game {
 		 */
 		ball.setX(intersectionPoint.x);
 		ball.setY(intersectionPoint.y);
+		ball.move(0.0001, 99999, 99999);
 		ball.setAngle(findAngle(cornerPoint, ball, reflectedLine));
 		return true;
 
 	}
 
-	private int findAngle(Point cornerPoint, Ball ball, Line reflectedLine) {
+	private static int findAngle(Point cornerPoint, Ball ball, Line reflectedLine) {
 		Point pLeft = new Point(ball.x - 1, reflectedLine.calculateY(ball.x - 1));
 		Point pRight = new Point(ball.x + 1, reflectedLine.calculateY(ball.x + 1));
 		double leftDistance = Point.findDistance(pLeft, cornerPoint);
@@ -220,20 +221,22 @@ public class Game {
 		}
 		double angle = Utils.radiansToDegrees(Math.atan(reflectedLine.getSlope()));
 		if (outsidePoint.x > ball.x && outsidePoint.y < ball.y) {
-			if (angle < 0) {
+			if (angle > 0) {
 				System.out.println("wack 2");
+			} else {
+				angle = angle + 360;
 			}
 		} else if (outsidePoint.x > ball.x && outsidePoint.y > ball.y) {
-			if (angle > 0) {
+			if (angle < 0) {
 				System.out.println("wack 3");
 			}
 		} else if (outsidePoint.x < ball.x && outsidePoint.y > ball.y) {
-			if (angle < 0) {
+			if (angle > 0) {
 				System.out.println("wack 4");
 			}
 			angle = angle + 180;
 		} else if (outsidePoint.x < ball.x && outsidePoint.y < ball.y) {
-			if (angle > 0) {
+			if (angle < 0) {
 				System.out.println("wack 5");
 			}
 			angle = angle + 180;

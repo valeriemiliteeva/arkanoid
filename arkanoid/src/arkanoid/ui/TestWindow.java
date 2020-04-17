@@ -22,10 +22,10 @@ public class TestWindow extends MainWindow {
 		block.setY(400);
 		
 		Ball ball = new Ball(15, Color.CYAN);
-		ball.setX(350);
-		ball.setY(300);
+		ball.setX(170);
+		ball.setY(350);
 		ball.setSpeed(150);
-		ball.setAngle(120);
+		ball.setAngle(125);
 
 		screen.addSprite(block);
 		screen.addSprite(ball);
@@ -41,6 +41,7 @@ public class TestWindow extends MainWindow {
 			screen.animate(10);
 			Segment ballSeg = new Segment(oldCenter, new Point(ball.getX(), ball.getY()));
 			Game.bounceOffBlockSides(block, ball, ballSeg);
+			Game.bounceOffBlockCorners(block, ball, ballSeg);
 		}
 	}
 

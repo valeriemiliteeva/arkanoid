@@ -9,11 +9,11 @@ public class Utils {
 	}
 
 	static public boolean doubleGreaterOrEqual(double a, double b) {
-		return a - b > -1e-8;
+		return a - b > -1e-6;
 	}
 
 	static public boolean doubleGreater(double a, double b) {
-		return a - b > 1e-8;
+		return a - b > 1e-6;
 	}
 	
 	static public double doubleDivide(double a, double b) {
@@ -85,8 +85,9 @@ public class Utils {
 		double f = wall.getC();
 		double h = ((c * d) - (a * f)) / ((b * d) - (a * e));
 		double k = ((c * e) - (b * f)) / ((a * e) - (b * d));
-		double beans = ((a * e * e) - (a * d * d) - (2 * b * d * e)) / ((b * e * e) - (b * d * d) + (2 * a * d * e));
-		Line reflectedLight = new Line(beans, h - beans * k);
+		double beans = ((a * e * e) - (a * d * d) - (2 * b * d * e)) 
+				/ ((b * e * e) - (b * d * d) + (2 * a * d * e));
+		Line reflectedLight = new Line(beans, h - (beans * k));
 		return reflectedLight;
 		
 	}
