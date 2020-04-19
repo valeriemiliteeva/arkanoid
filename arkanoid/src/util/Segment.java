@@ -31,21 +31,10 @@ public class Segment extends Line {
 	}
 
 	public static Point findIntersection(Segment s1, Segment s2) {
-		/*
-		 * method should return intersection point if one exists (otherwise null)
-		 */
-		double m1 = s1.slope;
-		double m2 = s2.slope;
-		double b1 = s1.yInt;
-		double b2 = s2.yInt;
-		// System.out.println("equation one: y = " + m1 + "x + " + b1 + "; equation two:
-		// y = " + m2 + "x + " + b2);
-		double xInt = Utils.doubleDivide(b2 - b1, m1 - m2);
-		double yInt = m1 * xInt + b1;
-		if (Utils.doubleEquals(m1, m2)) {
+		Point iPoint = Line.findIntersection(s1, s2);
+		if (iPoint == null) {
 			return null;
 		} else {
-			Point iPoint = new Point(xInt, yInt);
 			if (isBetween(s1, iPoint) && isBetween(s2, iPoint)) {
 				return iPoint;
 			} else {

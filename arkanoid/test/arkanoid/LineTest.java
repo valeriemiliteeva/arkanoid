@@ -47,11 +47,11 @@ public class LineTest {
 	
 	@Test
 	public void findReflectionEquation5() {
-		Line light = new Line(-1.5, 0);
-		Line wall = new Line(-3, -4);
+		Line wall = new Line(-1.5, 0);
+		Line light = new Line(-3, -4);
 		Line result = Utils.findReflectionEquation(light, wall);
 		System.out.println(result);
-		assertEquals("y = 2.00 * x + 9.00", result.toString());
+		assertEquals("y = -0.87 * x + 1.68", result.toString());
 	}
 	/*
 	 * write more tests with more complex angles (0 - 90)

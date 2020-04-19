@@ -76,7 +76,7 @@ public class Utils {
 		return points;
 	}
 	
-	public static Line findReflectionEquation(Line light, Line wall) {
+	public static Line findReflectionEquation2(Line light, Line wall) {
 		double a = light.getA();
 		double b = light.getB();
 		double c = light.getC();
@@ -91,7 +91,31 @@ public class Utils {
 		return reflectedLight;
 		
 	}
-	
+
+	public static Line findReflectionEquation(Line light, Line wall) {
+		double m1 = wall.getSlope();
+		double b1 = wall.getyInt();
+		double m2 = light.getSlope();
+		double b2 = light.getyInt();
+
+		Point iPoint = Line.findIntersection(light, wall);
+		double m3 = ((2 * m1) + (m2 * m1 * m1) - m2) / (2 * m1 * m2 - m1 * m1 + 1);
+		if (m3 > 50) {
+			m3 = 50;
+		}
+		if (m3 < -50) {
+			m3 = -50;
+		}
+		if (m3 > 0 && m3 < 0.01) {
+			m3 = 0.01;
+		}
+		if (m3 < 0 && m3 > -0.01) {
+			m3 = -0.01;
+		}
+		double b3 = iPoint.y - m3 * iPoint.x;
+		return new Line(m3, b3);
+	}
+
 	public static double radiansToDegrees(double radians) {
 		return (radians * 180) / Math.PI;
 	}

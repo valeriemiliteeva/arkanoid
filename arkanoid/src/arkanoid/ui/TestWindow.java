@@ -22,10 +22,10 @@ public class TestWindow extends MainWindow {
 		block.setY(400);
 		
 		Ball ball = new Ball(15, Color.CYAN);
-		ball.setX(170);
-		ball.setY(350);
+		ball.setX(200);
+		ball.setY(260);
 		ball.setSpeed(150);
-		ball.setAngle(125);
+		ball.setAngle(39);
 
 		screen.addSprite(block);
 		screen.addSprite(ball);

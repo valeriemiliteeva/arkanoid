@@ -191,15 +191,15 @@ public class Game {
 		 */
 		ball.setX(intersectionPoint.x);
 		ball.setY(intersectionPoint.y);
-		ball.move(0.0001, 99999, 99999);
 		ball.setAngle(findAngle(cornerPoint, ball, reflectedLine));
+		ball.move(.01, 99999, 99999);
 		return true;
 
 	}
 
 	private static int findAngle(Point cornerPoint, Ball ball, Line reflectedLine) {
-		Point pLeft = new Point(ball.x - 1, reflectedLine.calculateY(ball.x - 1));
-		Point pRight = new Point(ball.x + 1, reflectedLine.calculateY(ball.x + 1));
+		Point pLeft = new Point(ball.x - 0.001, reflectedLine.calculateY(ball.x - 0.001));
+		Point pRight = new Point(ball.x + 0.001, reflectedLine.calculateY(ball.x + 0.001));
 		double leftDistance = Point.findDistance(pLeft, cornerPoint);
 		double rightDistance = Point.findDistance(pRight, cornerPoint);
 		Point outsidePoint = null;
