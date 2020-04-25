@@ -84,6 +84,6 @@ public class Ball extends Sprite {
 		bounceLeft(maxX);
 		bounceRight(0);
 		bounceDown(maxY);
-		bounceUp(0);
+//		bounceUp(0);
 	}
 }

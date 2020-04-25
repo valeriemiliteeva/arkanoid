@@ -31,29 +31,29 @@ public class Board extends Sprite {
 	@Override
 	public void draw(Graphics2D g, int screenHeight) {
 		g.setColor(getColor());
-		g.fillRect(round(x) + SIDE_LENGTH, round(y), length - 2 * SIDE_LENGTH, height);
+		g.fillRect(round(x) + SIDE_LENGTH, screenHeight - round(y), length - 2 * SIDE_LENGTH, height);
 		g.setColor(Color.GRAY);
 		g.setStroke(new BasicStroke(4));
-		g.drawRect(round(x) + SIDE_LENGTH, round(y), length - 2 * SIDE_LENGTH, height);
+		g.drawRect(round(x) + SIDE_LENGTH, screenHeight - round(y), length - 2 * SIDE_LENGTH, height);
 		g.setColor(Color.PINK);
-		g.fillRect(round(x), round(y) - 2, SIDE_LENGTH, height + 4);
-		g.fillRect(round(x) + length - 10, round(y) - 2, SIDE_LENGTH, height + 4);
+		g.fillRect(round(x), screenHeight - round(y) - 2, SIDE_LENGTH, height + 4);
+		g.fillRect(round(x) + length - 10, screenHeight - round(y) - 2, SIDE_LENGTH, height + 4);
 		g.setColor(Color.RED);
-		g.drawRect(round(x), round(y) - 2, SIDE_LENGTH, height + 4);
-		g.drawRect(round(x) + length - SIDE_LENGTH, round(y) - 2, SIDE_LENGTH, height + 4);		
+		g.drawRect(round(x), screenHeight - round(y) - 2, SIDE_LENGTH, height + 4);
+		g.drawRect(round(x) + length - SIDE_LENGTH, screenHeight - round(y) - 2, SIDE_LENGTH, height + 4);		
 		
 	}
 	
 	public Segment getTopMidSeg() {
-		return new Segment(new Point(x + SIDE_LENGTH, y - 4), new Point(x - 2 * SIDE_LENGTH + length, y - 4));
+		return new Segment(new Point(x + SIDE_LENGTH, y + 4), new Point(x - 2 * SIDE_LENGTH + length, y + 4));
 	}
 	
 	public Segment getTopLeftSeg() {
-		return new Segment(new Point(x - 10, y - 4), new Point(x + SIDE_LENGTH, y - 4));
+		return new Segment(new Point(x, y + 4), new Point(x + SIDE_LENGTH, y + 4));
 	}
 	
 	public Segment getTopRightSeg() {
-		return new Segment(new Point(x - 2 * SIDE_LENGTH + length, y - 4), new Point(x + SIDE_LENGTH + 10, y - 4));
+		return new Segment(new Point(x + length - SIDE_LENGTH, y + 4), new Point(x + length, y + 4));
 	}
 	
 	

@@ -74,9 +74,9 @@ public class MainWindow {
 //		screen.addSprite(ball4);
 
 		Game game = new Game();
-//		screen.addSprites(game.getBlocks());
+		screen.addSprites(game.getBlocks());
 		screen.addSprites(game.getBalls());
-		//screen.addSprite(game.getBoard());
+		screen.addSprite(game.getBoard());
 
 		Canvas canvas = new Canvas(screen);
 		MainWindow window = new MainWindow(canvas);

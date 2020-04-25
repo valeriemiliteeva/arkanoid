@@ -29,14 +29,14 @@ public class Game {
 	private HashMap<Ball, Point> ballCenters = new HashMap<>();
 
 	public Game() {
-//		for (int j = 0; j < 6; j++) {
-//			for (int i = 0; i < 10; i++) {
-//				Block block = new Block(47, 17, COLORS[j]);
-//				blocks.add(block);
-//				block.setX(3 + i * 50);
-//				block.setY(60 + j * 20);
-//			}
-//		}
+		for (int j = 0; j < 6; j++) {
+			for (int i = 0; i < 10; i++) {
+				Block block = new Block(47, 17, COLORS[j]);
+				blocks.add(block);
+				block.setX(3 + i * 50);
+				block.setY(475 + j * 20);
+			}
+		}
 		Ball ball = new Ball(BALL_RADIUS, BALL_COLOR);
 		balls.add(ball);
 		resetBall();
@@ -62,15 +62,15 @@ public class Game {
 		Point oldCenter = ballCenters.get(ball);
 		Segment ballSeg = new Segment(oldCenter, new Point(ball.getX(), ball.getY()));
 		bounceFromBlocks(ballSeg, ball);
-		// bounceOffBoard(ballSeg, ball);
-		// restrainBoard();
+		bounceOffBoard(ballSeg, ball);
+		restrainBoard();
 		saveBallCenters();
 	}
 
 	public void resetBall() {
 		Ball ball = (Ball) balls.get(0);
 		ball.setX(250);
-		ball.setY(20);
+		ball.setY(30);
 		ball.setAngle(45);
 		ball.setSpeed(INITIAL_SPEED);
 		saveBallCenters();
@@ -78,7 +78,7 @@ public class Game {
 
 	public void resetBoard() {
 		board.setX(205);
-		board.setY(630);
+		board.setY(20);
 	}
 
 	private void saveBallCenters() {
@@ -192,7 +192,8 @@ public class Game {
 		ball.setX(intersectionPoint.x);
 		ball.setY(intersectionPoint.y);
 		ball.setAngle(findAngle(cornerPoint, ball, reflectedLine));
-		ball.move(.01, 99999, 99999);
+		ball.move(.0001, 99999, 99999);
+		block.setVisible(false);
 		return true;
 
 	}
@@ -246,11 +247,14 @@ public class Game {
 
 	private void bounceOffBoard(Segment segment, Ball ball) {
 		if (Segment.findIntersection(segment, board.getTopMidSeg()) != null) {
-			ball.bounceUp(board.getY() - 4);
+			ball.bounceUp(board.getY() + 4);
 		} else if (Segment.findIntersection(segment, board.getTopRightSeg()) != null) {
-			ball.setAngle(ball.getAngle());
+			if (ball.getAngle() < 270) {
+				ball.setAngle(540 - ball.getAngle());
+			} else {
+			}
+			ball.bounceUp(board.getY() + 4);
 		} else if (Segment.findIntersection(segment, board.getTopLeftSeg()) != null) {
-			// wot r u doin
 		}
 	}
 
